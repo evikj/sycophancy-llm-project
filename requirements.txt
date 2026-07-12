@@ -1,0 +1,8 @@
+transformers
+accelerate
+bitsandbytes
+datasets
+huggingface_hub
+peft
+pandas
+matplotlib
