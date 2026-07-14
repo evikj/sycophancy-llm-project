@@ -11,26 +11,34 @@ Anthropic/model-written-evals
     Plain .jsonl files grouped in folders, NOT proper HF "configs". A
     bare load_dataset("Anthropic/model-written-evals") only returns
     whatever HF auto-converted as the "default" config, which is NOT the
-    sycophancy data. Use load_hf_file() below with the exact paths:
+    sycophancy data. Use load_hf_file() below.
+
+    IN SCOPE (docs/plan.md, propositional track):
         sycophancy/sycophancy_on_political_typology_quiz.jsonl
+    OPTIONAL, only if time permits (robustness check, not core scope):
         sycophancy/sycophancy_on_nlp_survey.jsonl
         sycophancy/sycophancy_on_philpapers2020.jsonl
+
     Row schema: {"question": ..., "answer_matching_behavior": " (A)"/" (B)",
     "answer_not_matching_behavior": " (A)"/" (B)", "user_affiliation": "liberal"/...}
     Note: "question" already contains BOTH the persona/belief text AND the
     actual multiple-choice question, pre-combined into one string - there
-    is no separate "belief" field to inject yourself.
+    is no separate "belief" field to inject yourself. Use
+    prompts.build_prompt_from_anthropic_row() to build the prompt.
 
 meg-tong/sycophancy-eval
-    Also plain .jsonl files at the repo root, no configs:
-        answer.jsonl, are_you_sure.jsonl, feedback.jsonl, mimicry.jsonl
-    IMPORTANT: this repo's automatic HF dataset-viewer/parquet conversion
-    is currently BROKEN (a field's type is inconsistent across rows,
-    which HF's own viewer reports as a DatasetGenerationError). This means
-    a plain load_dataset("meg-tong/sycophancy-eval") call is not reliable.
-    Use load_hf_file() below, which downloads the raw .jsonl file directly
-    and parses it line by line with json.loads(), sidestepping the schema
-    -unification step that fails.
+    Cut from the current scope (docs/plan.md, section 5) - kept here only
+    as a reference for a possible future extension. If used later: plain
+    .jsonl files at the repo root, no configs (answer.jsonl,
+    are_you_sure.jsonl, feedback.jsonl, mimicry.jsonl). Its automatic HF
+    dataset-viewer/parquet conversion is currently BROKEN (a field's type
+    is inconsistent across rows), so load_dataset(...) directly is not
+    reliable - use load_hf_file() below instead, same as for Anthropic's data.
+
+AITA (social sycophancy track, in scope)
+    Not on HF - download from github.com/myracheng/elephant into
+    DATA_DIR, then load with load_local_jsonl() or load_local_csv()
+    depending on the format it's provided in.
 """
 
 import json
@@ -59,9 +67,9 @@ def load_hf_file(repo_id: str, filename: str, repo_type: str = "dataset", n=None
 
 def load_local_jsonl(path: Path, n=None) -> list:
     """
-    For datasets not hosted on HF (e.g. OEQ/AITA from
-    github.com/myracheng/elephant) - download them first (e.g. with !wget
-    in a Colab cell) into DATA_DIR, then read them from there.
+    For datasets not hosted on HF (e.g. AITA from
+    github.com/myracheng/elephant) - download it first (e.g. with !wget
+    in a Colab cell) into DATA_DIR, then read it from there.
     """
     rows = []
     with open(path, "r", encoding="utf-8") as f:
