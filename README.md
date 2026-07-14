@@ -2,11 +2,13 @@
 
 Code for a course project studying how persona-based emotional
 intelligence prompting affects propositional and social sycophancy in
-open-weight instruction-tuned LLMs (Llama-3-8B, Qwen2.5-7B, Mistral-7B).
+open-weight instruction-tuned LLMs (Llama-3-8B, Mistral-7B).
 
-The full experimental report (methodology, results, discussion) is
-written in Macedonian and lives in [`docs/`](docs/) - this README covers
-setup and code structure only.
+Scope is deliberately narrow - see [`docs/plan.md`](docs/plan.md) (in
+Macedonian) for the frozen research plan, including what was cut and why.
+The full experimental report (results, discussion) will also live in
+[`docs/`](docs/), in Macedonian - this README covers setup and code
+structure only.
 
 ## Repository layout
 
@@ -24,8 +26,10 @@ setup and code structure only.
 │   ├── datasets.py            <- dataset loaders (HF + local jsonl/csv)
 │   └── evaluate.py            <- response parsing + metrics
 ├── notebooks/
+│   ├── 00_connection_test.ipynb
 │   └── 01_propositional_baseline_EXAMPLE.ipynb
-└── docs/                      <- Macedonian experimental report goes here
+└── docs/
+    └── plan.md                <- frozen research plan (Macedonian)
 ```
 
 ## Two storage tiers: GitHub vs. Google Drive

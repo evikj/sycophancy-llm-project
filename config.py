@@ -44,10 +44,13 @@ for _d in [DATA_DIR, RAW_RESULTS_DIR, PROCESSED_RESULTS_DIR, MODEL_CACHE_DIR]:
 # ---------------------------------------------------------------------------
 # MODELS
 # ---------------------------------------------------------------------------
+# Scoped down to two models on purpose (see docs/plan.md, section 5).
+# Mistral has no access gate, so it's the faster one to get a first
+# end-to-end test running. Llama-3 requires requesting access on its HF
+# page and logging in with a token before it will download.
 MODELS = {
     "llama3-8b": "meta-llama/Meta-Llama-3-8B-Instruct",  # gated: requires HF token + accepted license
-    "qwen2.5-7b": "Qwen/Qwen2.5-7B-Instruct",
-    "mistral-7b": "mistralai/Mistral-7B-Instruct-v0.3",
+    "mistral-7b": "mistralai/Mistral-7B-Instruct-v0.3",  # ungated - use this for the first pilot run
 }
 
 # ---------------------------------------------------------------------------
